@@ -36,6 +36,11 @@
   font-weight: bold;
 }
 
+.logoLink{
+  text-decoration: none;
+  color: black;
+}
+
 .action {
   flex: 1;
   display: flex;
@@ -46,6 +51,7 @@
 .menuItem{
     font-size: 14px;
     margin-right: 15px;
+    text-transform: uppercase;
 }
 
 
