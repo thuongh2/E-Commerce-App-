@@ -127,6 +127,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const [err, setError] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -147,8 +148,13 @@ const Product = () => {
     }
   };
 
+  console.log(color);
+
   const handleClick = () => {
-    dispatch(addProduct({ ...product, quantity, color, size }));
+    if (color && size) {
+      dispatch(addProduct({ ...product, quantity, color, size }));
+      setError("Them vao gio hang thanh cong")
+    } else setError("Vui long chon size va mau sac");
   };
 
   return (
@@ -162,7 +168,7 @@ const Product = () => {
         <InfoContainer>
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
-          <Price>{product.price}</Price>
+          <Price>{product.price} VNĐ</Price>
           {/* FILLTER */}
           <FilterContainer>
             <Filter>
@@ -191,6 +197,7 @@ const Product = () => {
             <Button onClick={() => handleClick()}>ADD TO CART</Button>
           </AddContainer>
           {/* END */}
+          {err}
         </InfoContainer>
       </Wrapper>
       {/* End */}

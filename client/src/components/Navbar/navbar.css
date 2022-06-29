@@ -12,6 +12,42 @@
 .search {
   display: flex;
   flex: 1;
+  position: relative;
+}
+
+.searchBox {
+  position: absolute;
+  top: 10px;
+  border: 2px solid lightgray;
+  top: 30px;
+  left: 43px;
+  width: 200px;
+  z-index: 2;
+  border-radius: 5px;
+  background-color: white;
+
+}
+
+.searchLink{
+  text-decoration: none;
+  color: black;
+}
+
+.searchItem{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.searchImg{
+  width: 55px;
+  height: 55px;
+}
+
+.searchName{
+  font-size: 18px;
 }
 
 .searchContainer {
@@ -36,7 +72,7 @@
   font-weight: bold;
 }
 
-.logoLink{
+.logoLink {
   text-decoration: none;
   color: black;
 }
@@ -48,48 +84,44 @@
   justify-content: flex-end;
 }
 
-.menuItem{
-    font-size: 14px;
-    margin-right: 15px;
-    text-transform: uppercase;
+.menuItem {
+  font-size: 14px;
+  margin-right: 15px;
+  text-transform: uppercase;
 }
 
-
-
-@media only screen and (max-width: 380px){
-  .container{
+@media only screen and (max-width: 380px) {
+  .container {
     height: 50px;
   }
 
-  .wrapper{
+  .wrapper {
     padding: 10px 0px;
   }
 
-  .searchContainer{
+  .searchContainer {
     margin-left: 5px;
   }
 
-  .language{
+  .language {
     display: none;
   }
 
-  .searchContainer > input{
+  .searchContainer > input {
     width: 50px;
   }
 
-  .logo > h1{
+  .logo > h1 {
     font-size: 24px;
   }
 
-  .action{
+  .action {
     flex: 2;
     justify-content: center;
   }
 
-  .menuItem{
+  .menuItem {
     font-size: 12px;
     margin-left: 10px;
   }
-
-
 }

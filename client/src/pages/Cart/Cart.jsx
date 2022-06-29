@@ -3,11 +3,14 @@ import styled from "styled-components";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import { Add, Remove } from "@material-ui/icons";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { mobile } from "../../reponsive";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useHistory } from "react-router-dom";
 import { userRequest } from "../../requestMethods";
+import { useDispatch } from "react-redux";
+import { changeProduct, deleteCart } from "../../redux/cartRedux";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -152,6 +155,8 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(1);
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -172,6 +177,24 @@ const Cart = () => {
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, history]);
 
+  const handleQuantity = (type, product) => {
+    setQuantity(product.quantity);
+
+    if (type === "dec") {
+      quantity > 0 ? setQuantity(quantity - 1) : setQuantity(1);
+    } else if (type === "inc") {
+      setQuantity(quantity + 1);
+    }
+    
+    const price = quantity * product.price - product.quantity * product.price;
+
+    dispatch(changeProduct({ ...product, quantity, price }));
+  };
+
+  const handleDelete = (product) => {
+    dispatch(deleteCart(product));
+  };
+
   return (
     <Container>
       <Navbar />
@@ -187,7 +210,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products?.map((product) => (
-              <Product>
+              <Product key={product._id}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
@@ -206,14 +229,15 @@ const Cart = () => {
                 <PriceDetail>
                   {/* Change amount */}
                   <ProductAmountContainer>
-                    <Add />
+                    <Add onClick={() => handleQuantity("inc", product)} />
                     <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
+                    <Remove onClick={() => handleQuantity("dec", product)} />
                   </ProductAmountContainer>
                   {/* End */}
                   <ProductPrice>
                     {product.price * product.quantity}
                   </ProductPrice>
+                  <DeleteIcon onClick={() => handleDelete(product)} />
                 </PriceDetail>
               </Product>
             ))}
